@@ -123,7 +123,7 @@ label {
 
 input,
 select,
-#add-user {
+.add-user {
   background-color: transparent;
   border: 2px solid var(--primary-color);
   border-radius: 10px 10px 10px 10px;
@@ -133,7 +133,7 @@ select,
   width: 100%;
 }
 
-#add-user {
+.add-user {
   cursor: pointer;
   background-color: var(--primary-color);
   margin-top: 10px;

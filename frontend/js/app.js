@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to fetch and display users from the API backend
   async function fetchUsers() {
     try {
-      const response = await fetch("http://localhost:3000/users");
+      const response = await fetch("http://localhost:4500/api/v1/user");
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
@@ -21,18 +21,19 @@ document.addEventListener("DOMContentLoaded", () => {
       users.forEach((user) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${user.name}</td>
-          <td>${user.age}</td>
-          <td>${user.birth_date}</td>
-          <td>${user.email}</td>
-          <td>${user.part_of}</td>
-          <td>
-            <button class="btn btn-primary edit-button" data-id="${user.id}">Edit</button>
-            <button class="btn btn-danger delete-button" data-id="${user.id}">Delete</button>
-          </td>
-        `;
+        <td>${user.name}</td>
+        <td>${user.age}</td>
+        <td>${user.birth_date}</td>
+        <td>${user.email}</td>
+        <td>${user.part_of}</td>
+        <td>
+          <button class="btn btn-primary edit-button" data-id="${user.id}">Edit</button>
+          <button class="btn btn-danger delete-button" data-id="${user.id}">Delete</button>
+        </td>
+      `;
         userList.appendChild(row);
       });
+
       const deleteButtons = document.querySelectorAll(".delete-button");
       deleteButtons.forEach((button) => {
         button.addEventListener("click", handleDelete);
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", handleEdit);
       });
     } catch (error) {
-      console.error("Erorr Fetching Users:", error);
+      console.error("Error Fetching Users:", error);
     }
   }
 
