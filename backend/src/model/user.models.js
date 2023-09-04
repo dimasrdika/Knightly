@@ -1,7 +1,7 @@
 const db = require("../config/db.js");
 const { ErrorServer } = require("../utils/helper/erorr.helper.js");
 
-exports.TABLE_NAME = "user";
+exports.TABLE_NAME = "users";
 
 class UserModel {
   constructor() {
@@ -10,6 +10,36 @@ class UserModel {
 
   async getAll() {
     return await db.select().from(this.tableName);
+  }
+
+  async save({ name, age, gender, email, birth_date, part_of }) {
+    try {
+      const newUser = {
+        name,
+        age,
+        gender,
+        email,
+        birth_date,
+        part_of,
+      };
+      // console.log(newUser);
+      await db(this.tableName)
+        .insert(newUser)
+        .into(this.tableName)
+        .returning("*");
+
+      return {
+        name: newUser.name,
+        email: newUser.email,
+        gender: newUser.gender,
+        age: newUser.age,
+        birth_date: newUser.birth_date,
+        part_of: newUser.part_of,
+      };
+    } catch (e) {
+      console.log(e);
+      throw new ErrorServer(e.detail);
+    }
   }
 
   async create({ name, age, gender, email, birth_date, part_of }) {
@@ -109,6 +139,9 @@ class UserModel {
     } catch (e) {
       throw new ErrorServer(e.detail);
     }
+  }
+  async getUserById(id) {
+    return knex("users").where("id", id).first();
   }
 }
 

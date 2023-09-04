@@ -1,4 +1,4 @@
-const ErrorUserInput = require("../utils/helper/erorr.helper");
+const ErrorUserInput = require("../../utils/helper/erorr.helper");
 const {
   usersOkResponse,
   usersErrorResponse,

@@ -22,6 +22,7 @@ body {
   width: 100%;
 }
 
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -108,6 +109,37 @@ body {
   justify-content: flex-start;
 }
 
+
+form {
+  background-color: transparent;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+label {
+  color: white;
+}
+
+input,
+select,
+#add-user {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  border-radius: 10px 10px 10px 10px;
+  color: var(--white);
+  margin-bottom: 10px;
+  padding: 5px;
+  width: 100%;
+}
+
+#add-user {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  margin-top: 10px;
+}
+
+
 .container-table {
   margin-top: 10em;
 }
@@ -125,7 +157,7 @@ body {
 
 .table-transparent thead th {
   background-color: transparent;
-  color: #fff;
+  color: var(--white);
 }
 
 .table-transparent tbody td {

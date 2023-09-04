@@ -31,18 +31,17 @@ const createUser = async (req, res) => {
     request.part_of = body.part_of;
 
     const userModel = new UserModel();
-    const newUser = await userModel.save(
-      request.name,
-      request.age,
-      request.birth_date,
-      request.gender,
-      request.email,
-      request.birth_date
-    );
+
+    // for cek my code run or not haha
+    console.log(body);
+    const newUser = await userModel.save(request);
+    // for cek my code run or not haha
+    console.log(newUser);
     return res
       .status(200)
       .send(usersOkResponse("success create new user", newUser));
   } catch (e) {
+    console.log(e);
     return res.status(e.code || 400).json(usersErrorResponse(e.message));
   }
 };

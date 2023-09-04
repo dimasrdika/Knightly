@@ -7,7 +7,9 @@ const prefixPath = "/api/v1/user";
 //  how to test api
 router.get(`${prefixPath}/ping`, (req, res) => res.send("pong"));
 // how to get all user
-router.get(`${prefixPath}/:id`, controllerUser.getAllUsers);
+router.get(`${prefixPath}/all`, controllerUser.getAllUsers);
+//  how to get user by id
+router.get(`${prefixPath}/:id`, controllerUser.getUserId);
 // how to add user
 router.post(`${prefixPath}/add`, controllerUser.createUser);
 // how to delete user

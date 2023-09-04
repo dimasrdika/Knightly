@@ -3,17 +3,28 @@ const userModel = new UserModel();
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await userModel.getAllUsers();
+    const users = await userModel.getAll();
     res.status(200).json({ users });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ err: "internal server error" });
+  }
+};
+
+const getUserById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await userModel.getUserById(id);
+    res.status(200).json({ user });
+  } catch (err) {
+    res.send(500).json({ err: "internal server erorr" });
   }
 };
 
 const addUsers = async (req, res) => {
   try {
     const user = req.body;
-    const newUser = await userModel.create(user);
+
     console.log(user);
     res.status(201).json({ newUser });
   } catch (err) {
@@ -59,6 +70,7 @@ const controllerUser = {
   deleteUsers,
   editUsers,
   updateUsers,
+  getUserById,
 };
 
 module.exports = controllerUser;

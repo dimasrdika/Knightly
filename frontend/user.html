@@ -42,7 +42,6 @@
         >
       </div>
     </nav>
-    <div id="root>
     <div class="containers">
       <div class="sidebar">
         <div class="user-account">
@@ -69,6 +68,32 @@
         </ul>
       </div>
     </div>
+    <!-- form -->
+    <form>
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div>
+        <label for="age">Age:</label>
+        <input type="text" id="age" name="age" required />
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div>
+        <label for="birth_date">Birth Date:</label>
+        <input type="text" id="birth_date" name="birth_date" required />
+      </div>
+      <div>
+        <label for="part_of">Part Of:</label>
+        <input type="text" id="part_of" name="part_of" required />
+      </div>
+      <div>
+        <button type="submit" id="add-btn">Add</button>
+      </div>
+    </form>
     <!-- Table -->
     <div class="container container-table">
       <div class="row">
@@ -85,32 +110,12 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>30</td>
-                <td>1992-05-15</td>
-                <td>john@example.com</td>
-                <td>Department A</td>
-                <td>
-                  <button class="btn btn-primary btn-sm">Edit</button>
-                  <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jane Smith</td>
-                <td>25</td>
-                <td>1997-10-20</td>
-                <td>jane@example.com</td>
-                <td>Department B</td>
-                <td>
-                  <button class="btn btn-primary btn-sm">Edit</button>
-                  <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-              </tr>
-              <tr>
+            <tbody id="user-list">
+              <!-- user list is here -->
+            </tbody>
+            <!-- <button class="btn btn-primary btn-sm">Edit</button>
+                  <!-- <button class="btn btn-danger btn-sm">Delete</button>  -->
+            <!-- <tr>
                 <td>3</td>
                 <td>Michael Johnson</td>
                 <td>40</td>
@@ -122,8 +127,47 @@
                   <button class="btn btn-danger btn-sm">Delete</button>
                 </td>
               </tr>
-            </tbody>
+            </tbody> -->
           </table>
+        </div>
+        <div id="editModal" class="modal">
+          <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Student</h2>
+            <input
+              type="text"
+              id="edit-name"
+              class="form-control"
+              placeholder="Name"
+            />
+            <input
+              type="text"
+              id="edit-age"
+              class="form-control"
+              placeholder="Age"
+            />
+            <input
+              type="text"
+              id="edit-birth_date"
+              class="form-control"
+              placeholder="Birth Date"
+            />
+            <input
+              type="text"
+              id="edit-email"
+              class="form-control"
+              placeholder="Email"
+            />
+            <input
+              type="text"
+              id="edit-part_of"
+              class="form-control"
+              placeholder="Part Of"
+            />
+            <button id="update-btn" class="btn btn-primary btn-block">
+              Update User
+            </button>
+          </div>
         </div>
       </div>
     </div>
