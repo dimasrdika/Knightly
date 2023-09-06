@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const editEmail = document.getElementById("edit-email");
   const editPartof = document.getElementById("part_of");
   const updateBtn = document.getElementById("update-btn");
-  const closeBtn = document.getElementById("close-btn");
+  const closeBtn = document.querySelectorAll(".close-btn");
 
   // Function to fetch and display users from the API backend
   async function fetchUsers() {
@@ -68,132 +68,65 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   }
+
+  //for handle edit
   async function handleEdit(event) {
     const id = event.target.dataset.id;
 
-    // Fetch users data by ID
+    // Fetch user data by ID
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/user/edit/${id}`
+        `http://localhost:4500/api/v1/user/edit/${id}`
       );
-      const users = await response.json();
+      const user = await response.json();
 
-      // Populate modal inputs with student data
-      editName.value = users.name;
-      editEmail.value = users.email;
-      editPartof.value = users.part_of;
+      // Set modal input fields to the user's data
+      editName.value = user.name;
+      editEmail.value = user.email;
+      editPartof.value = user.class;
 
-      // Display modal
+      // Display the modal
       editModal.style.display = "block";
 
-      // Update users data on "Update" button click
+      // Update the user
       updateBtn.addEventListener("click", async () => {
         const newName = editName.value;
         const newEmail = editEmail.value;
         const newPartOf = editPartof.value;
 
+        // Check if all fields are filled
         if (newName && newEmail && newPartOf) {
           try {
+            // Send a PATCH request to the API
             const response = await fetch(
-              `http://localhost:3000/api/v1/userss/${id}`,
+              `http://localhost:4500/api/v1/user/edit/${id}`,
               {
-                method: "PUT",
+                method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                   name: newName,
                   email: newEmail,
-                  part_of: newPartOf,
+                  class: newPartOf,
                 }),
               }
             );
 
+            // If the request is successful, update the users list and close the modal
             if (response.ok) {
-              fetchuserss(); // Refresh the list after editing
-              closeEditModal();
+              fetchUsers();
+              closeEditUsers();
             }
           } catch (error) {
-            console.error("Error editing users:", error);
+            console.error("Error updating user:", error);
           }
         }
       });
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching user:", error);
     }
   }
-
-  // Close modal function
-  function closeEditModal() {
-    editModal.style.display = "none";
-    editName.value = "";
-    editEmail.value = "";
-    editPartof.value = "";
-  }
-
-  // Close modal when close button is clicked
-  for (let closeButton of closeBtn) {
-    closeButton.addEventListener("click", closeEditModal);
-  }
-  // for handle edit
-  // async function handleEdit(event) {
-  //   const id = event.target.dataset.id;
-
-  //   // Fetch user data by ID
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:4500/api/v1/user/edit/${id}`
-  //     );
-  //     const user = await response.json();
-
-  //     // Set modal input fields to the user's data
-  //     editName.value = user.name;
-  //     editEmail.value = user.email;
-  //     editPartof.value = user.class;
-
-  //     // Display the modal
-  //     editModal.style.display = "block";
-
-  //     // Update the user
-  //     updateBtn.addEventListener("click", async () => {
-  //       const newName = editName.value;
-  //       const newEmail = editEmail.value;
-  //       const newPartOf = editPartof.value;
-
-  //       // Check if all fields are filled
-  //       if (newName && newEmail && newPartOf) {
-  //         try {
-  //           // Send a PATCH request to the API
-  //           const response = await fetch(
-  //             `http://localhost:4500/api/v1/user/edit/${id}`,
-  //             {
-  //               method: "PATCH",
-  //               headers: {
-  //                 "Content-Type": "application/json",
-  //               },
-  //               body: JSON.stringify({
-  //                 name: newName,
-  //                 email: newEmail,
-  //                 class: newPartOf,
-  //               }),
-  //             }
-  //           );
-
-  //           // If the request is successful, update the users list and close the modal
-  //           if (response.ok) {
-  //             fetchUsers();
-  //             closeEditUsers();
-  //           }
-  //         } catch (error) {
-  //           console.error("Error updating user:", error);
-  //         }
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching user:", error);
-  //   }
-  // }
-
   // for handle add
   addUser.addEventListener("click", async () => {
     const name = document.getElementById("name").value;
@@ -209,88 +142,102 @@ document.addEventListener("DOMContentLoaded", () => {
           },
           body: JSON.stringify({ name, email, class: part_of }),
         });
+
         if (response.ok) {
           fetchUsers();
           document.getElementById("name").value = "";
           document.getElementById("email").value = "";
           document.getElementById("part_of").value = "";
+        } else {
+          console.error(
+            "Failed to add user. Server returned:",
+            response.status,
+            response.statusText
+          );
         }
       } catch (error) {
         console.error("Error Adding User:", error);
       }
     }
   });
-  // //for handle edit
-  // async function handleEdit(event) {
-  //   const id = event.target.dataset.id;
 
-  //   // Fetch user data by ID
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:4500/api/v1/user/edit/${id}`
-  //     );
-  //     const user = await response.json();
+  //for handle edit
+  async function handleEdit(event) {
+    const id = event.target.dataset.id;
 
-  //     // Set modal input fields to the user's data
-  //     editName.value = user.name;
-  //     editEmail.value = user.email;
-  //     editPartof.value = user.class;
+    // Fetch user data by ID
+    try {
+      const response = await fetch(
+        `http://localhost:4500/api/v1/user/edit/${id}`
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch user with ID ${id}`);
+      }
 
-  //     // Display the modal
-  //     editModal.style.display = "block";
+      const user = await response.json();
 
-  //     // Update the user
-  //     updateBtn.addEventListener("click", async () => {
-  //       const newName = editName.value;
-  //       const newEmail = editEmail.value;
-  //       const newPartOf = editPartof.value;
+      // Set modal input fields to the user's data
+      editName.value = user.name;
+      editEmail.value = user.email;
+      editPartof.value = user.class;
 
-  //       // Check if all fields are filled
-  //       if (newName && newEmail && newPartOf) {
-  //         try {
-  //           // Send a PATCH request to the API
-  //           const response = await fetch(
-  //             `http://localhost:4500/api/v1/user/edit/${id}`,
-  //             {
-  //               method: "PATCH",
-  //               headers: {
-  //                 "Content-Type": "application/json",
-  //               },
-  //               body: JSON.stringify({
-  //                 name: newName,
-  //                 email: newEmail,
-  //                 class: newPartOf,
-  //               }),
-  //             }
-  //           );
+      // Display the modal
+      editModal.style.display = "block";
 
-  //           // If the request is successful, update the users list and close the modal
-  //           if (response.ok) {
-  //             fetchUsers();
-  //             closeEditUsers();
-  //           }
-  //         } catch (error) {
-  //           console.error("Error updating user:", error);
-  //         }
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching user:", error);
-  //   }
-  // }
+      // Update the user
+      updateBtn.addEventListener("click", async () => {
+        const newName = editName.value;
+        const newEmail = editEmail.value;
+        const newPartOf = editPartof.value;
 
-  // // Close the modal
-  // function closeEditUsers() {
-  //   editModal.style.display = "none";
-  //   editName.value = "";
-  //   editEmail.value = "";
-  //   editPartof.value = "";
-  // }
+        // Check if all fields are filled
+        if (newName && newEmail && newPartOf) {
+          try {
+            // Send a PATCH request to the API
+            const updateResponse = await fetch(
+              `http://localhost:4500/api/v1/user/edit/${id}`,
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  name: newName,
+                  email: newEmail,
+                  class: newPartOf,
+                }),
+              }
+            );
 
-  // // Close the modal when clicked
-  // for (let closeBtn of closeBtns) {
-  //   closeBtn.addEventListener("click", closeEditUsers);
-  // }
+            if (!updateResponse.ok) {
+              throw new Error(`Failed to update user with ID ${id}`);
+            }
+
+            // If the request is successful, update the users list and close the modal
+            fetchUsers();
+            closeEditUsers();
+          } catch (error) {
+            console.error("Error updating user:", error);
+          }
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  }
+
+  // Close the modal
+  function closeEditUsers() {
+    editModal.style.display = "none";
+    editName.value = "";
+    editEmail.value = "";
+    editPartof.value = "";
+  }
+
+  // Close the modal when clicked
+  closeBtn.forEach((closeBtn) => {
+    closeBtn.addEventListener("click", closeEditUsers);
+  });
 
   fetchUsers();
 });

@@ -1,4 +1,4 @@
-const ErrorUserInput = require("../../utils/helper/erorr.helper");
+const { ErrorServer } = require("../../utils/helper/erorr.helper");
 const {
   usersOkResponse,
   usersErrorResponse,
@@ -12,13 +12,21 @@ const editUser = async (req, res) => {
     const body = req.body;
 
     if (!body.name && !body.email && !body.part_of) {
-      throw new ErrorUserInput("No fields to update");
+      throw new ErrorServer("No fields to update");
+      // return {
+      //   status: 400,
+      //   message: "No fields to update",
+      // };
     }
 
-    const updatedUser = await userModel.update(userId, body);
+    const updatedUser = await userModel.edit(userId, body);
 
     if (!updatedUser) {
-      throw new ErrorUserInput("User not found");
+      throw new ErrorServer("User not found");
+      // return {
+      //   status: 404,
+      //   message: "User not found",
+      // };
     }
 
     return res.editUser
