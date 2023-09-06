@@ -24,7 +24,7 @@ const getUserById = async (req, res) => {
 const addUsers = async (req, res) => {
   try {
     const user = req.body;
-
+    const newUser = await userModel.create(user);
     console.log(user);
     res.status(201).json({ newUser });
   } catch (err) {
@@ -54,22 +54,11 @@ const editUsers = async (req, res) => {
   }
 };
 
-const updateUsers = async (req, res) => {
-  try {
-    const user = req.body;
-    const updateUser = await userModel.updateUsers(user);
-    res.status(200).json({ updateUser });
-  } catch {
-    res.status(500).json({ err: "internal server error" });
-  }
-};
-
 const controllerUser = {
   getAllUsers,
   addUsers,
   deleteUsers,
   editUsers,
-  updateUsers,
   getUserById,
 };
 

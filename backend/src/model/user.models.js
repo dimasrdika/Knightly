@@ -9,17 +9,14 @@ class UserModel {
   }
 
   async getAll() {
-    return await db.select().from(this.tableName);
+    return await db.select("*").from(this.tableName);
   }
 
-  async save({ name, age, gender, email, birth_date, part_of }) {
+  async save({ name, email, part_of }) {
     try {
       const newUser = {
         name,
-        age,
-        gender,
         email,
-        birth_date,
         part_of,
       };
       // console.log(newUser);
@@ -31,9 +28,6 @@ class UserModel {
       return {
         name: newUser.name,
         email: newUser.email,
-        gender: newUser.gender,
-        age: newUser.age,
-        birth_date: newUser.birth_date,
         part_of: newUser.part_of,
       };
     } catch (e) {
@@ -42,12 +36,9 @@ class UserModel {
     }
   }
 
-  async create({ name, age, gender, email, birth_date, part_of }) {
+  async create({ name, email, part_of }) {
     const newUser = {
       name,
-      age,
-      birth_date,
-      gender,
       email,
       part_of,
     };
@@ -67,7 +58,7 @@ class UserModel {
     return userToDelete;
   }
 
-  async edit({ id, name, age, email, birth_date, gender, part_of }) {
+  async edit({ id, name, email, part_of }) {
     const existingUser = await db(this.tableName).where("id", id).first();
 
     if (!existingUser?.id) {
@@ -77,10 +68,7 @@ class UserModel {
     const editedUser = {
       id: existingUser.id,
       name: name || existingUser.name,
-      age: age || existingUser.age,
       email: email || existingUser.email,
-      birth_date: birth_date || existingUser.birth_date,
-      gender: gender || existingUser.gender,
       part_of: part_of || existingUser.part_of,
     };
 
@@ -88,21 +76,17 @@ class UserModel {
     return editedUser;
   }
 
-  async find(
-    { limit = 10, page = 1 },
-    { email = "", gender = "", name = "", part_of = "" }
-  ) {
+  async find({ limit = 10, p = 1 }, { email = "", name = "", part_of = "" }) {
     try {
       let query = db
-        .select("id", "name", "email", "gender", "age", "part_of")
+        .select("id", "name", "email", "part_of")
         .table(this.tableName);
 
       if (name) query = query.where("name", "ilike", `%${name}%`);
       if (email) query = query.where("email", "ilike", `%${email}%`);
       if (part_of) query = query.where("part_of", "ilike", `%${part_of}%`);
-      if (gender) query = query.where("gender", gender);
 
-      query = query.limit(limit).offset((page - 1) * limit);
+      query = query.limit(limit).offset((p - 1) * limit);
 
       const [users, [{ count: total }]] = await Promise.all([
         query,
@@ -111,15 +95,14 @@ class UserModel {
           .where((builder) => {
             if (email) builder.where("email", "ilike", `%${email}%`);
             if (name) builder.where("name", "ilike", `%${name}%`);
-            if (gender) builder.where("gender", gender);
           }),
       ]);
 
       return {
         users,
         total: Number(total),
-        page,
-        has_next: page * limit < total,
+        p,
+        has_next: p * limit < total,
       };
     } catch (e) {
       console.error(e);
@@ -130,7 +113,7 @@ class UserModel {
   async findOne(id) {
     try {
       const result = await db
-        .select("id", "name", "email", "gender", "age", "part_of", "birth_date")
+        .select("id", "name", "email", "part_of")
         .table(this.tableName)
         .where("id", id)
         .first();

@@ -18,92 +18,79 @@ body {
   background-color: var(--black);
 }
 
-.containers {
-  width: 100%;
-}
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 110px;
-  height: 100%;
-  backdrop-filter: blur(15px);
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  flex-direction: column;
-  transition: width 0.3s ease-in-out;
-}
-
-.sidebar .user-account {
-  display: flex;
-  align-items: center;
-  padding: 40px 10px 20px 10px;
-  color: var(--primary-color);
-  justify-content: center;
-  text-align: center;
-}
-
-.user-account h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: none;
-  margin-left: 15px;
-}
-
 .links {
   list-style: none;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow-y: auto;
-  height: calc(100% - 140px);
 }
 
-.links li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 100px;
-  transition: 0.3s ease;
-}
-
-.links li a {
+.links a {
   color: var(--white);
-  font-weight: 500;
-  margin-left: 5px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
   text-decoration: none;
   justify-content: center;
   align-items: center;
   text-align: center;
-  white-space: nowrap;
-  display: none;
 }
 
-.links li a:hover {
-  color: var(--secondary-color);
+h1 {
+  text-align: center;
+  margin: 2rem 0;
+  font-size: 2.5rem;
 }
 
-.logout {
-  margin-top: 20px;
+.accordion {
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto;
 }
 
-.links::-webkit-scrollbar {
-  display: none;
+.accordion-item {
+  background-color: var(--white);
+  color: var(--black);
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
 }
 
-.sidebar:hover {
-  width: 260px;
+.accordion-item-header {
+  padding: 0.5rem 3rem 0.5rem 1rem;
+  min-height: 3.5rem;
+  line-height: 1.25rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
 }
 
-.sidebar:hover .user-account h2 {
-  display: block;
+.accordion-item-header::after {
+  content: "\002B";
+  font-size: 2rem;
+  position: absolute;
+  right: 1rem;
 }
 
-.sidebar:hover .links li a {
-  display: block;
-  justify-content: flex-start;
+.accordion-item-header.active::after {
+  content: "\2212";
+}
+
+.accordion-item-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.accordion-item-body-content {
+  padding: 1rem;
+  line-height: 1.5rem;
+  border-top: 1px solid;
+}
+
+@media (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
 }

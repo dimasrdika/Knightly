@@ -18,95 +18,21 @@ body {
   background-color: var(--black);
 }
 
-.containers {
-  width: 100%;
-}
-
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 110px;
-  height: 100%;
-  backdrop-filter: blur(15px);
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  flex-direction: column;
-  transition: width 0.3s ease-in-out;
-}
-
-.sidebar .user-account {
-  display: flex;
-  align-items: center;
-  padding: 40px 10px 20px 10px;
-  color: var(--primary-color);
-  justify-content: center;
-  text-align: center;
-}
-
-.user-account h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  display: none;
-  margin-left: 15px;
-}
-
 .links {
   list-style: none;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow-y: auto;
-  height: calc(100% - 140px);
 }
 
-.links li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 100px;
-  transition: 0.3s ease;
-}
-
-.links li a {
+.links a {
   color: var(--white);
-  font-weight: 500;
-  margin-left: 5px;
+  font-size: 1.2rem;
+  padding: 0.5rem;
   text-decoration: none;
   justify-content: center;
   align-items: center;
   text-align: center;
-  white-space: nowrap;
-  display: none;
-}
-
-.links li a:hover {
-  color: var(--secondary-color);
-}
-
-.logout {
-  margin-top: 20px;
-}
-
-.links::-webkit-scrollbar {
-  display: none;
-}
-
-.sidebar:hover {
-  width: 260px;
-}
-
-.sidebar:hover .user-account h2 {
-  display: block;
-}
-
-.sidebar:hover .links li a {
-  display: block;
-  justify-content: flex-start;
 }
 
 
@@ -163,4 +89,25 @@ select,
 .table-transparent tbody td {
   background-color: var(--black);
   color: var(--white);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--black);
+}
+
+.modal-content {
+  background-color: var(--primary-color);
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 31%;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(163, 162, 162, 0.2);
 }

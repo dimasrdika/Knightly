@@ -9,9 +9,9 @@ const getUserId = async (req, res) => {
   try {
     const id = req.params.id;
     if (!id) throw new ErrorUserInput("id is required");
-
     const userModel = new UserModel();
     const user = await userModel.findOne(id);
+    console.log(user);
 
     return res.status(200).json(usersOkResponse(user));
   } catch (e) {

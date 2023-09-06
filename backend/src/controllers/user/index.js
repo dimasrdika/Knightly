@@ -4,4 +4,5 @@ module.exports = {
   deleteUser: require("./delete.controller"),
   getAllUsers: require("./get_all_user.controller"),
   updateUser: require("./update.user.controller"),
+  editUser: require("./edit.user.controller"),
 };

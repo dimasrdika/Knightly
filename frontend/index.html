@@ -32,28 +32,42 @@
     />
   </head>
   <body style="background-color: #040d12">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg" style="background-color: #040d12">
-      <div class="container-md">
-        <a
-          class="navbar-brand align-items-center fs-1 pointer-event fw-bolder text-center mx-auto"
-          href="/"
-          style="color: #7a0eff"
-          >K.</a
+    <nav
+      class="navbar navbar-expand-lg navbar-dark"
+      style="background: transparent"
+    >
+      <div class="container">
+        <a class="navbar-brand fs-4 fw-bold" href="#" style="color: #7a0eff"
+          >Knightly</a
         >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <div class="links">
+              <i class="bi bi-house fs-4 text-warning"></i>
+              <a href="./index.html">Home</a>
+              <i class="bi bi-file-person-fill fs-4" style="color: #e966a0"></i>
+              <a href="./about.html">About</a>
+              <i class="bi bi-people-fill fs-4 text-danger"></i>
+              <a href="./user.html">Users</a>
+              <i class="bi bi-patch-question-fill fs-4 text-success"></i>
+              <a href="./faqs.html">FAQs</a>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
-    <div
-      id="intro-example"
-      class="p-5 text-center bg-image"
-      style="
-        background-image: url('../assets/workers-considering-term-agreement.jpg');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        height: 100vh;
-      "
-    >
+    <div id="intro-example" class="p-5 text-center bg-image backgrounds">
       <div class="d-flex justify-content-center align-items-center h-100">
         <div class="text-white">
           <h1 class="mb-3 fw-bold">
@@ -76,34 +90,6 @@
         </div>
       </div>
     </div>
-    <!-- Sidebars -->
-    <div class="containers">
-      <div class="sidebar">
-        <div class="user-account">
-          <i class="bi bi-buildings fs-4"></i>
-          <h2>Knightly</h2>
-        </div>
-        <ul class="links">
-          <li>
-            <i class="bi bi-house fs-4 text-warning"></i>
-            <a href="./index.html">Home</a>
-          </li>
-          <li>
-            <i class="bi bi-file-person-fill fs-4" style="color: #e966a0"></i>
-            <a href="./about.html">About</a>
-          </li>
-          <li>
-            <i class="bi bi-people-fill fs-4 text-danger"></i>
-            <a href="./user.html">Users</a>
-          </li>
-          <li>
-            <i class="bi bi-patch-question-fill fs-4 text-success"></i>
-            <a href="./faqs.html">FAQs</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
