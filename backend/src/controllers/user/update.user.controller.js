@@ -7,10 +7,10 @@ const UserModel = require("../../model/user.models.js");
 const updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const body = req.body;
+    const { name, email, part_of } = req.body;
 
     const userModel = new UserModel();
-    const updatedUser = await userModel.update(userId, body);
+    const updatedUser = await userModel.edit(userId, name, email, part_of);
 
     if (!updatedUser) {
       throw new ErrorUserInput("User not found");

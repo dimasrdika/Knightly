@@ -1,20 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
   const userList = document.getElementById("user-list");
   const addUser = document.getElementById("add-btn");
-  const editModal = document.getElementById("edit-modal");
+  const editModal = document.getElementById("editModal");
   const editName = document.getElementById("edit-name");
   const editEmail = document.getElementById("edit-email");
-  const editPartof = document.getElementById("part_of");
+  const editPartof = document.getElementById("edit-part_of");
   const updateBtn = document.getElementById("update-btn");
   const closeBtn = document.querySelectorAll(".close-btn");
 
-  // Function to fetch and display users from the API backend
+  //* Function to fetch and display users from the API backend
   async function fetchUsers() {
     try {
       const response = await fetch("http://localhost:4500/api/v1/user/all");
       const resp = await response.json();
       const users = resp.data.users;
-      userList.innerHTML = ""; // Clear the user list before adding new data
+      userList.innerHTML = ""; //* Clear the user list before adding new data
       users.forEach((user) => {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -23,13 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${user.email}</td>
         <td>${user.part_of}</td>
         <td>
-          <button class="btn btn-primary edit-button" data-id="${user.id}">Edit</button>
+          <button class="btn btn-info edit-button" data-id="${user.id}">Edit</button>
           <button class="btn btn-danger delete-button" data-id="${user.id}">Delete</button>
         </td>
       `;
         userList.appendChild(row);
       });
-
+      //* For handle delete & edit
       const deleteButtons = document.querySelectorAll(".delete-button");
       deleteButtons.forEach((button) => {
         button.addEventListener("click", handleDelete);
@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // for handle delete button
+  //! for handle delete button
+
   async function handleDelete(e) {
     const id = e.target.dataset.id;
     const response = await fetch(
@@ -69,21 +70,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  //for handle edit
+  //! Function to fetch user data by ID and handle the edit process
   async function handleEdit(event) {
     const id = event.target.dataset.id;
-
-    // Fetch user data by ID
     try {
-      const response = await fetch(
-        `http://localhost:4500/api/v1/user/edit/${id}`
-      );
+      // Fetch user data by ID
+      const response = await fetch(`http://localhost:4500/api/v1/user/${id}`);
+
+      if (!response.ok) {
+        throw new Error(
+          `Error fetching user: ${response.status} ${response.statusText}`
+        );
+      }
+
       const user = await response.json();
 
       // Set modal input fields to the user's data
       editName.value = user.name;
       editEmail.value = user.email;
-      editPartof.value = user.class;
+      editPartof.value = user.part_of;
 
       // Display the modal
       editModal.style.display = "block";
@@ -98,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (newName && newEmail && newPartOf) {
           try {
             // Send a PATCH request to the API
-            const response = await fetch(
+            const patchResponse = await fetch(
               `http://localhost:4500/api/v1/user/edit/${id}`,
               {
                 method: "PATCH",
@@ -108,16 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({
                   name: newName,
                   email: newEmail,
-                  class: newPartOf,
+                  part_of: newPartOf,
                 }),
               }
             );
 
-            // If the request is successful, update the users list and close the modal
-            if (response.ok) {
-              fetchUsers();
-              closeEditUsers();
+            if (!patchResponse.ok) {
+              throw new Error(
+                `Error updating user: ${patchResponse.status} ${patchResponse.statusText}`
+              );
             }
+
+            // If the request is successful, update the users list and close the modal
+            fetchUsers();
+            closeEditUsers();
           } catch (error) {
             console.error("Error updating user:", error);
           }
@@ -127,12 +136,29 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching user:", error);
     }
   }
-  // for handle add
+
+  // Close the modal
+  function closeEditUsers() {
+    if (editModal && editName && editEmail && editPartof) {
+      editModal.style.display = "none";
+      editName.value = "";
+      editEmail.value = "";
+      editPartof.value = "";
+    } else {
+      console.error("One or more required elements not found in the DOM.");
+    }
+  }
+
+  // Close the modal when clicked
+  closeBtn.forEach((btn) => {
+    btn.addEventListener("click", closeEditUsers);
+  });
+
+  //! for handle add
   addUser.addEventListener("click", async () => {
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const part_of = document.getElementById("part_of").value;
-
     if (name && email && part_of) {
       try {
         const response = await fetch(`http://localhost:4500/api/v1/user/add`, {
@@ -140,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email, class: part_of }),
+          body: JSON.stringify({ name, email, part_of }),
         });
 
         if (response.ok) {
@@ -159,84 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error Adding User:", error);
       }
     }
-  });
-
-  //for handle edit
-  async function handleEdit(event) {
-    const id = event.target.dataset.id;
-
-    // Fetch user data by ID
-    try {
-      const response = await fetch(
-        `http://localhost:4500/api/v1/user/edit/${id}`
-      );
-      if (!response.ok) {
-        throw new Error(`Failed to fetch user with ID ${id}`);
-      }
-
-      const user = await response.json();
-
-      // Set modal input fields to the user's data
-      editName.value = user.name;
-      editEmail.value = user.email;
-      editPartof.value = user.class;
-
-      // Display the modal
-      editModal.style.display = "block";
-
-      // Update the user
-      updateBtn.addEventListener("click", async () => {
-        const newName = editName.value;
-        const newEmail = editEmail.value;
-        const newPartOf = editPartof.value;
-
-        // Check if all fields are filled
-        if (newName && newEmail && newPartOf) {
-          try {
-            // Send a PATCH request to the API
-            const updateResponse = await fetch(
-              `http://localhost:4500/api/v1/user/edit/${id}`,
-              {
-                method: "PATCH",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  name: newName,
-                  email: newEmail,
-                  class: newPartOf,
-                }),
-              }
-            );
-
-            if (!updateResponse.ok) {
-              throw new Error(`Failed to update user with ID ${id}`);
-            }
-
-            // If the request is successful, update the users list and close the modal
-            fetchUsers();
-            closeEditUsers();
-          } catch (error) {
-            console.error("Error updating user:", error);
-          }
-        }
-      });
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  }
-
-  // Close the modal
-  function closeEditUsers() {
-    editModal.style.display = "none";
-    editName.value = "";
-    editEmail.value = "";
-    editPartof.value = "";
-  }
-
-  // Close the modal when clicked
-  closeBtn.forEach((closeBtn) => {
-    closeBtn.addEventListener("click", closeEditUsers);
   });
 
   fetchUsers();

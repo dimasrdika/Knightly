@@ -13,6 +13,6 @@ router.get(`${prefixPath}/:id`, controllerUser.getUserId);
 router.post(`${prefixPath}/add`, controllerUser.createUser);
 // how to delete user
 router.delete(`${prefixPath}/delete/:id`, controllerUser.deleteUser);
-//  how to edit controller
-router.patch(`${prefixPath}/edit/:id`, controllerUser.editUser);
+//  how to update user
+router.patch(`${prefixPath}/edit/:id`, controllerUser.updateUser);
 module.exports = router;

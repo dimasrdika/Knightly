@@ -58,7 +58,7 @@ class UserModel {
     return userToDelete;
   }
 
-  async edit({ id, name, email, part_of }) {
+  async edit(id, name, email, part_of) {
     const existingUser = await db(this.tableName).where("id", id).first();
 
     if (!existingUser?.id) {

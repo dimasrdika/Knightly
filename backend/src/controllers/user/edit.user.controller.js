@@ -9,7 +9,7 @@ const userModel = new UserModel();
 const editUser = async (req, res) => {
   try {
     const userId = req.params.id;
-    const body = req.body;
+    const { name, email, part_of } = req.body;
 
     if (!body.name && !body.email && !body.part_of) {
       throw new ErrorServer("No fields to update");
@@ -19,7 +19,7 @@ const editUser = async (req, res) => {
       // };
     }
 
-    const updatedUser = await userModel.edit(userId, body);
+    const updatedUser = await userModel.edit(userId, name, email, part_of);
 
     if (!updatedUser) {
       throw new ErrorServer("User not found");
