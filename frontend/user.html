@@ -67,6 +67,7 @@
         </div>
       </div>
     </nav>
+    <!-- add section -->
     <div class="form-user">
       <div class="container">
         <div class="row">
@@ -84,9 +85,7 @@
               <input type="text" id="part_of" name="part_of" required />
             </div>
             <div>
-              <button class="btn-primary" type="submit" id="add-btn">
-                Add User
-              </button>
+              <button type="submit" id="add-btn">Add User</button>
             </div>
           </div>
         </div>
@@ -112,41 +111,45 @@
           </table>
         </div>
         <div id="editModal" class="modal">
-          <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Edit User</h2>
-            <form>
-              <div class="form-group">
-                <label for="edit-name">Name:</label>
-                <input
-                  type="text"
-                  id="edit-name"
-                  class="form-control"
-                  placeholder="Enter name"
-                />
-              </div>
-              <div class="form-group">
-                <label for="edit-email">Email:</label>
-                <input
-                  type="email"
-                  id="edit-email"
-                  class="form-control"
-                  placeholder="Enter email"
-                />
-              </div>
-              <div class="form-group">
-                <label for="edit-part_of">Part Of:</label>
-                <input
-                  type="text"
-                  id="edit-part_of"
-                  class="form-control"
-                  placeholder="Enter part of"
-                />
-              </div>
-              <button id="update-btn" class="btn btn-primary btn-block">
-                Update User
-              </button>
-            </form>
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <span id="close-button" class="close" data-dismiss="modal"
+                >&times;</span
+              >
+              <h2 class="modal-title">Edit User</h2>
+              <form>
+                <div class="form-group">
+                  <label for="edit-name">Name:</label>
+                  <input
+                    type="text"
+                    id="edit-name"
+                    class="form-control"
+                    placeholder="Enter name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="edit-email">Email:</label>
+                  <input
+                    type="email"
+                    id="edit-email"
+                    class="form-control"
+                    placeholder="Enter email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="edit-part_of">Part Of:</label>
+                  <input
+                    type="text"
+                    id="edit-part_of"
+                    class="form-control"
+                    placeholder="Enter part of"
+                  />
+                </div>
+                <button id="update-btn" class="btn btn-primary btn-block">
+                  Update User
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

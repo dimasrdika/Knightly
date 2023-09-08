@@ -49,7 +49,7 @@ label {
 
 input,
 select,
-.add-user {
+#add-btn {
   background-color: transparent;
   border: 2px solid var(--primary-color);
   border-radius: 10px 10px 10px 10px;
@@ -59,7 +59,7 @@ select,
   width: 100%;
 }
 
-.add-user {
+#add-btn {
   cursor: pointer;
   background-color: var(--primary-color);
   margin-top: 10px;
@@ -67,7 +67,7 @@ select,
 
 
 .container-table {
-  margin-top: 10em;
+  margin-top: 5em;
 }
 
 .table-transparent {
@@ -91,28 +91,8 @@ select,
   color: var(--white);
 }
 
-/* #Editmodal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--black);
-}
 
-.modal-content {
-  background-color: var(--primary-color);
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 10px;
-  width: 31%;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(163, 162, 162, 0.2);
-} */
 
-/* Style the modal container */
 .modal {
   display: none;
   position: fixed;
@@ -122,7 +102,7 @@ select,
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: --black;
 }
 
 /* Style the modal content */
@@ -130,17 +110,20 @@ select,
   background-color: var(--black);
   margin: 10% auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--primary-color);
   border-radius: 5px;
   width: 60%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Style the close button */
-.close-button {
-  float: right;
+#close-button {
+  position: absolute;
+  top: 10px;
+  right: 20px;
   font-size: 24px;
   font-weight: bold;
+  color: var(--black);
   cursor: pointer;
 }
 

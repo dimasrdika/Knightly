@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const editEmail = document.getElementById("edit-email");
   const editPartof = document.getElementById("edit-part_of");
   const updateBtn = document.getElementById("update-btn");
-  const closeBtn = document.querySelectorAll(".close-btn");
+  const closeBtn = document.getElementById("close-button");
 
   //* Function to fetch and display users from the API backend
   async function fetchUsers() {
@@ -84,11 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const user = await response.json();
+      console.log({ editName, user });
 
       // Set modal input fields to the user's data
-      editName.value = user.name;
-      editEmail.value = user.email;
-      editPartof.value = user.part_of;
+      editName.value = user.data.name;
+      editEmail.value = user.data.email;
+      editPartof.value = user.data.part_of;
 
       // Display the modal
       editModal.style.display = "block";
@@ -150,9 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Close the modal when clicked
-  closeBtn.forEach((btn) => {
-    btn.addEventListener("click", closeEditUsers);
-  });
+  closeBtn.addEventListener("click", closeEditUsers);
 
   //! for handle add
   addUser.addEventListener("click", async () => {

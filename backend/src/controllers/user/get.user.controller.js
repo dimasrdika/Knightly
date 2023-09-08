@@ -13,7 +13,9 @@ const getUserId = async (req, res) => {
     const user = await userModel.findOne(id);
     console.log(user);
 
-    return res.status(200).json(usersOkResponse(user));
+    return res
+      .status(200)
+      .json(usersOkResponse("success get user detail", user));
   } catch (e) {
     return res.status(e.code || 400).json(usersErrorResponse(e.message));
   }
